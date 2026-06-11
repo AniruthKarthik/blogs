@@ -1,3 +1,10 @@
 <!-- Base head tags -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- SEO & Social Meta Tags -->
+{{ template "_internal/opengraph.html" . }}
+{{ template "_internal/twitter_cards.html" . }}
+
+<!-- View Transitions -->
+<meta name="view-transition" content="same-origin" />

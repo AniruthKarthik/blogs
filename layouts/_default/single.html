@@ -2,15 +2,41 @@
   <article class="container animate-up">
     <header class="article-header content-narrow">
       <time class="article-meta" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "MMMM 02, 2006" }}</time>
+      <span class="article-meta" style="margin-left: var(--space-4);">· {{ .ReadingTime }} min read</span>
       <h1 class="article-title">{{ .Title }}</h1>
       {{ with .Params.subtitle }}
         <p style="font-size: var(--text-md); color: var(--fg-secondary); margin-bottom: var(--space-4);">{{ . }}</p>
       {{ end }}
     </header>
 
-    <div class="prose content-narrow">
-      {{ .Content }}
+    <div style="display: flex; justify-content: center; position: relative; max-width: var(--container-width); margin: 0 auto;">
+      <div class="prose content-narrow" style="flex-grow: 1; min-width: 0;">
+        {{ .Content }}
+      </div>
+      {{ if and (gt (len .TableOfContents) 100) (ne .Params.toc false) }}
+      <aside class="toc-sidebar" style="position: sticky; top: 100px; height: fit-content; margin-left: var(--space-8); width: 250px;">
+        <h4 style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-secondary); margin-bottom: var(--space-4);">Table of Contents</h4>
+        <div style="font-size: var(--text-sm); color: var(--fg-secondary); line-height: 1.6;">
+          {{ .TableOfContents }}
+        </div>
+      </aside>
+      {{ end }}
     </div>
+
+    {{ $related := .Site.RegularPages.Related . | first 3 }}
+    {{ if $related }}
+      <div class="related-posts content-narrow" style="margin-top: var(--space-16); padding-top: var(--space-8); border-top: 0.5px solid var(--border);">
+        <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-6);">Continue Exploring</h3>
+        <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+          {{ range $related }}
+            <a href="{{ .RelPermalink }}" class="post-row-inner" style="grid-template-columns: 1fr; gap: var(--space-1); transition: transform 0.2s; display: block;">
+              <h4 style="font-size: var(--text-md); font-weight: 600;">{{ .Title }}</h4>
+              <p style="font-size: var(--text-sm); color: var(--fg-secondary);">{{ .Summary | plainify | truncate 100 }}</p>
+            </a>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
 
     <footer class="content-narrow" style="margin-top: var(--space-24); padding-top: var(--space-8); border-top: 0.5px solid var(--border);">
       <div style="display: flex; justify-content: space-between; align-items: center;">

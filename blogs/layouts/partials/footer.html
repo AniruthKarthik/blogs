@@ -1,5 +1,11 @@
 <footer class="footer">
   <div class="container">
+    <div style="display: flex; justify-content: center; margin-bottom: var(--space-6);">
+      <a href="{{ "index.xml" | relURL }}" target="_blank" style="display: flex; align-items: center; gap: var(--space-2); color: var(--fg-secondary); transition: color 0.2s;" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--fg-secondary)'">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
+        <span style="font-size: var(--text-sm); font-weight: 500;">Subscribe via RSS</span>
+      </a>
+    </div>
     <p>&copy; {{ now.Format "2006" }} {{ .Site.Params.author.name }}.</p>
   </div>
 </footer>
