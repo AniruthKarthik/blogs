@@ -14,7 +14,7 @@
 
     <footer class="content-narrow" style="margin-top: var(--space-24); padding-top: var(--space-8); border-top: 0.5px solid var(--border);">
       <div style="display: flex; justify-content: space-between; align-items: center;">
-        <a href="/posts" style="font-size: var(--text-sm); font-weight: 600; color: var(--fg-secondary);">← Back to index</a>
+        <a href="{{ "posts" | relURL }}" style="font-size: var(--text-sm); font-weight: 600; color: var(--fg-secondary);">← Back to index</a>
         {{ with .Params.tags }}
           <div style="display: flex; gap: var(--space-2);">
             {{ range . }}
