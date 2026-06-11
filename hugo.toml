@@ -9,6 +9,7 @@ title = "Ani's Internet Lore"
   pagerSize = 10
 
 [params]
+  defaultTheme = "light"
   description = "Internet rabbit holes nobody asked for."
 
 
