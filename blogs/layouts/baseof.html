@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
+  {{ $style := resources.Get "css/main.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  {{ partial "head.html" . }}
+</head>
+<body data-theme="light">
+  {{ partial "header.html" . }}
+  
+  <main>
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  {{ partial "footer.html" . }}
+
+  <script>
+    // Theme logic
+    const body = document.body;
+    const currentTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    body.setAttribute('data-theme', currentTheme);
+
+    function toggleTheme() {
+      const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+
+    // Search & Filter Logic
+    let searchIndex = null;
+    const homeSearchInput = document.getElementById('home-search-input');
+    const dynamicPostList = document.getElementById('dynamic-post-list');
+    const listTitle = document.getElementById('list-title');
+    let initialListHTML = dynamicPostList ? dynamicPostList.innerHTML : '';
+
+    async function ensureSearchIndex() {
+      if (!searchIndex) {
+        const res = await fetch('{{ "index.json" | relURL }}');
+        searchIndex = await res.json();
+      }
+    }
+
+    if (homeSearchInput && dynamicPostList) {
+      homeSearchInput.addEventListener('focus', ensureSearchIndex);
+      
+      homeSearchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        
+        if (!query) {
+          dynamicPostList.innerHTML = initialListHTML;
+          listTitle.textContent = 'Latest Writing';
+          return;
+        }
+
+        if (!searchIndex) return;
+
+        const filtered = searchIndex.filter(item => 
+          item.title.toLowerCase().includes(query) || 
+          item.summary.toLowerCase().includes(query) ||
+          item.content.toLowerCase().includes(query)
+        );
+
+        if (filtered.length > 0) {
+          listTitle.textContent = `Found ${filtered.length} matching lore`;
+          dynamicPostList.innerHTML = filtered.map(item => `
+            <a href="${item.permalink}" class="post-row" style="animation: fadeInUp 0.4s ease-out forwards;">
+              <div class="post-row-inner">
+                <time class="post-date">${item.date}</time>
+                <div class="post-info">
+                  <h3 class="post-title" style="font-size: var(--text-lg);">${item.title}</h3>
+                  <p class="post-summary" style="font-size: var(--text-sm);">${item.summary}</p>
+                </div>
+              </div>
+            </a>
+          `).join('');
+        } else {
+          listTitle.textContent = 'No lore found';
+          dynamicPostList.innerHTML = '<div style="padding: var(--space-12) 0; text-align: center; color: var(--fg-secondary);">The archives are empty for this query.</div>';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
