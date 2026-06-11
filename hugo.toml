@@ -11,11 +11,20 @@ title = "Ani's Internet Lore"
 [params]
   defaultTheme = "light"
   description = "Internet rabbit holes nobody asked for."
+  mainSection = "posts"
 
-
+  [params.social]
+    github = "https://github.com/AniruthKarthik"
 
   [params.author]
     name = "Ani"
+
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 10
 
 [markup]
   [markup.highlight]

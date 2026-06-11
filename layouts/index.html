@@ -14,7 +14,8 @@
     <h2 id="list-title" style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-secondary); margin-bottom: var(--space-6); border-bottom: 0.5px solid var(--border); padding-bottom: var(--space-2);">Latest Writing</h2>
     
     <div id="dynamic-post-list">
-      {{ range first 10 (where .Site.RegularPages "Section" "posts") }}
+      {{ $mainSection := site.Params.mainSection | default "posts" }}
+      {{ range first 10 (where site.RegularPages "Section" $mainSection) }}
         <a href="{{ .RelPermalink }}" class="post-row">
           <div class="post-row-inner">
             <time class="post-date">{{ .Date.Format "Jan 02, 2006" }}</time>
@@ -28,7 +29,8 @@
     </div>
 
     <div style="margin-top: var(--space-8);">
-      <a href="/blogs/posts" style="font-size: var(--text-sm); font-weight: 600; color: var(--fg-secondary); opacity: 0.8; transition: opacity 0.2s;">View all articles →</a>
+      {{ $mainSectionPage := site.GetPage "section" $mainSection }}
+      <a href="{{ if $mainSectionPage }}{{ $mainSectionPage.RelPermalink }}{{ else }}{{ (printf "/%s/" $mainSection) | relURL }}{{ end }}" style="font-size: var(--text-sm); font-weight: 600; color: var(--fg-secondary); opacity: 0.8; transition: opacity 0.2s;">View all {{ $mainSectionPage.Title | default (humanize $mainSection) | lower }} →</a>
     </div>
   </section>
 {{ end }}
