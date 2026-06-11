@@ -1,0 +1,24 @@
+baseURL = "https://AniruthKarthik.github.io/blogs/"
+languageCode = "en-us"
+title = "Ani's Internet Lore"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[pagination]
+  pagerSize = 10
+
+[params]
+  description = "Internet rabbit holes nobody asked for."
+
+
+
+  [params.author]
+    name = "Ani"
+
+[markup]
+  [markup.highlight]
+    noClasses = false
+    style = "github-dark"
+  [markup.goldmark.renderer]
+    unsafe = true

@@ -1,0 +1,25 @@
+{{ define "main" }}
+  <section class="container animate-up" style="padding-top: var(--space-24);">
+    <div class="content-narrow">
+      <header style="margin-bottom: var(--space-16);">
+        <h1 style="font-size: var(--text-2xl); font-weight: 800; letter-spacing: -0.04em; margin-bottom: var(--space-2);">{{ .Title }}</h1>
+        <p style="color: var(--fg-secondary);">Topics categorized under "{{ .Title }}".</p>
+      </header>
+
+      <div class="post-list">
+        {{ range .Paginator.Pages }}
+          <a href="{{ .RelPermalink }}" class="post-row">
+            <div class="post-row-inner">
+              <time class="post-date">{{ .Date.Format "Jan 02, 2006" }}</time>
+              <div class="post-info">
+                <h3 class="post-title" style="font-size: var(--text-lg);">{{ .Title }}</h3>
+              </div>
+            </div>
+          </a>
+        {{ end }}
+      </div>
+
+      {{ partial "paginator.html" . }}
+    </div>
+  </section>
+{{ end }}
