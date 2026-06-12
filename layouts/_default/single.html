@@ -45,22 +45,7 @@
       </div>
     {{ end }}
 
-    <!-- Cusdis Comments Section -->
-    <div class="comments-section content-narrow" style="margin-top: var(--space-16); padding: var(--space-8); background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
-      <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-6); display: flex; align-items: center; gap: 8px;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--fg-secondary);"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        Discussion
-      </h3>
-      <div id="cusdis_thread"
-        data-host="https://cusdis.com"
-        data-app-id="a92c1c4e-fe98-4c83-bc30-d950dbfd09c3"
-        data-page-id="{{ .File.UniqueID }}"
-        data-page-url="{{ .Permalink }}"
-        data-page-title="{{ .Title }}"
-        data-theme="dark"
-      ></div>
-      <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
-    </div>
+
 
     <!-- Lyket Script (Requires API Key) -->
     <script async src="https://unpkg.com/@lyket/widget@latest/build/lyket.js?apiKey=pt_135274db6cd2ccec97046b2c8acc54"></script>
