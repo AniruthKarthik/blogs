@@ -210,8 +210,8 @@ li { list-style: none; }
 
 /* Single Post */
 .article-header {
-  padding: var(--space-24) 0 var(--space-12);
-  text-align: center;
+  padding: var(--space-16) 0 var(--space-12);
+  text-align: left;
 }
 
 .article-title {
