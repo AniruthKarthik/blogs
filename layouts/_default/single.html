@@ -4,7 +4,7 @@
       <div style="display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-4);">
         <time class="article-meta" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "MMMM 02, 2006" }}</time>
         <span class="article-meta">· {{ .ReadingTime }} min read</span>
-        <span class="article-meta">· <img src="https://hits.dwyl.com/{{ site.Params.author.name | default "blog" }}/{{ .File.UniqueID | default .File.TranslationBaseName }}.svg?style=flat&show=unique" alt="Views" style="display: inline; vertical-align: middle; height: 20px; border-radius: 4px; filter: grayscale(100%); opacity: 0.8;"></span>
+        <span class="article-meta">· <span id="view-count">...</span> views</span>
       </div>
       <h1 class="article-title">{{ .Title }}</h1>
       {{ with .Params.subtitle }}
@@ -61,6 +61,19 @@
 
     <!-- Lyket Script (Requires API Key) -->
     <script async src="https://unpkg.com/@lyket/widget@latest/build/lyket.js?apiKey=pt_135274db6cd2ccec97046b2c8acc54"></script>
+
+    <!-- View Counter Script -->
+    <script>
+      fetch('https://api.counterapi.dev/v1/{{ site.Params.author.name | default "blog" | lower }}/{{ .File.UniqueID | default "post" }}/up')
+        .then(response => response.json())
+        .then(data => {
+          const viewCountEl = document.getElementById('view-count');
+          if (viewCountEl && data.count) {
+            viewCountEl.innerText = data.count.toLocaleString();
+          }
+        })
+        .catch(err => console.error('Error fetching view count:', err));
+    </script>
 
     <footer class="content-narrow" style="margin-top: var(--space-24); padding-top: var(--space-8); border-top: 0.5px solid var(--border);">
       <div style="display: flex; justify-content: space-between; align-items: center;">
