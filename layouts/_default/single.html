@@ -18,7 +18,7 @@
         
         <!-- Lyket Like/Clap Button -->
         <div style="margin-top: var(--space-12); display: flex; justify-content: center;">
-          <div data-lyket-type="clap" data-lyket-id="{{ .File.UniqueID }}" data-lyket-namespace="blog" data-lyket-template="twitter"></div>
+          <div data-lyket-type="clap" data-lyket-id="{{ .File.UniqueID }}" data-lyket-namespace="blog" data-lyket-template="twitter" data-lyket-color-text="white"></div>
         </div>
       </div>
       {{ if and (gt (len .TableOfContents) 100) (ne .Params.toc false) }}
@@ -55,6 +55,7 @@
         data-page-id="{{ .File.UniqueID }}"
         data-page-url="{{ .Permalink }}"
         data-page-title="{{ .Title }}"
+        data-theme="dark"
       ></div>
       <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
     </div>
