@@ -1,8 +1,11 @@
 {{ define "main" }}
   <article class="container animate-up">
     <header class="article-header content-narrow">
-      <time class="article-meta" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "MMMM 02, 2006" }}</time>
-      <span class="article-meta" style="margin-left: var(--space-4);">· {{ .ReadingTime }} min read</span>
+      <div style="display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-4);">
+        <time class="article-meta" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "MMMM 02, 2006" }}</time>
+        <span class="article-meta">· {{ .ReadingTime }} min read</span>
+        <span class="article-meta">· <img src="https://hits.dwyl.com/{{ site.Params.author.name | default "blog" }}/{{ .File.UniqueID | default .File.TranslationBaseName }}.svg?style=flat&show=unique" alt="Views" style="display: inline; vertical-align: middle; height: 20px; border-radius: 4px; filter: grayscale(100%); opacity: 0.8;"></span>
+      </div>
       <h1 class="article-title">{{ .Title }}</h1>
       {{ with .Params.subtitle }}
         <p style="font-size: var(--text-md); color: var(--fg-secondary); margin-bottom: var(--space-4);">{{ . }}</p>
@@ -12,6 +15,11 @@
     <div style="display: flex; justify-content: center; position: relative; max-width: var(--container-width); margin: 0 auto;">
       <div class="prose content-narrow" style="flex-grow: 1; min-width: 0;">
         {{ .Content }}
+        
+        <!-- Lyket Like/Clap Button -->
+        <div style="margin-top: var(--space-12); display: flex; justify-content: center;">
+          <div data-lyket-type="clap" data-lyket-id="{{ .File.UniqueID }}" data-lyket-namespace="blog" data-lyket-template="twitter"></div>
+        </div>
       </div>
       {{ if and (gt (len .TableOfContents) 100) (ne .Params.toc false) }}
       <aside class="toc-sidebar" style="position: sticky; top: 100px; height: fit-content; margin-left: var(--space-8); width: 250px;">
@@ -37,6 +45,22 @@
         </div>
       </div>
     {{ end }}
+
+    <!-- Cusdis Comments Section -->
+    <div class="comments-section content-narrow" style="margin-top: var(--space-16); padding-top: var(--space-8); border-top: 0.5px solid var(--border);">
+      <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-6);">Comments</h3>
+      <div id="cusdis_thread"
+        data-host="https://cusdis.com"
+        data-app-id="a92c1c4e-fe98-4c83-bc30-d950dbfd09c3"
+        data-page-id="{{ .File.UniqueID }}"
+        data-page-url="{{ .Permalink }}"
+        data-page-title="{{ .Title }}"
+      ></div>
+      <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+    </div>
+
+    <!-- Lyket Script (Requires API Key) -->
+    <script async src="https://unpkg.com/@lyket/widget@latest/build/lyket.js?apiKey=pt_135274db6cd2ccec97046b2c8acc54"></script>
 
     <footer class="content-narrow" style="margin-top: var(--space-24); padding-top: var(--space-8); border-top: 0.5px solid var(--border);">
       <div style="display: flex; justify-content: space-between; align-items: center;">
